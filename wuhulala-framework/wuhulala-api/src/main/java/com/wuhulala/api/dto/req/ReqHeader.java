@@ -1,9 +1,9 @@
 package com.wuhulala.api.dto.req;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @since  v1.0<br>
@@ -15,7 +15,48 @@ import java.io.Serializable;
 public class ReqHeader implements Serializable {
 
     /** 用户id */
-    @Getter @Setter
     private String userId;
+
+    private Long reqId;
+
+    private Date startTime;
+
+    private final Map<String, String> attachments = new HashMap<String, String>();
+
+    public String getAttachment(String key) {
+        return attachments.get(key);
+    }
+
+
+    public ReqHeader setAttachment(String key, String value) {
+        if (value == null) {
+            attachments.remove(key);
+        } else {
+            attachments.put(key, value);
+        }
+        return this;
+    }
+
+
+    public ReqHeader removeAttachment(String key) {
+        attachments.remove(key);
+        return this;
+    }
+
+    public Map<String, String> getAttachments() {
+        return attachments;
+    }
+
+    public ReqHeader setAttachments(Map<String, String> attachment) {
+        this.attachments.clear();
+        if (attachment != null && attachment.size() > 0) {
+            this.attachments.putAll(attachment);
+        }
+        return this;
+    }
+
+    public void clearAttachments() {
+        this.attachments.clear();
+    }
 
 }
